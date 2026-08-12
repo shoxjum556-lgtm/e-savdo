@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}MEGA E-SAVDO — Onlayn marketplace{% endblock %}
+
+{% block content %}
+
+<main class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-copy">
+            <span class="hero-kicker">
+                ● MEGA E-SAVDO · MAXSUS TAKLIFLAR
+            </span>
+
+            <h1>
+                Smart xarid.<br>
+                <span style="color:#ffd43b">Yaxshi tanlov.</span>
+            </h1>
+
+            <p>
+                Minglab mahsulotlar orasidan keraklisini toping.
+                Qulay qidiruv, ishonchli buyurtma va tezkor yetkazib berish —
+                barchasi bir joyda.
+            </p>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px">
+                <a class="btn btn-primary" href="#products">
+                    Xaridni boshlash →
+                </a>
+
+                <a class="btn btn-dark" href="/?category=">
+                    Katalogni ko'rish
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-art">
+            🛍️
+        </div>
+    </section>
+
+
+    <!-- CATEGORIES -->
+    <div class="section-title">
+        <h2>Ommabop kategoriyalar</h2>
+        <span>Tanlovni kengaytirish →</span>
+    </div>
+
+    <div class="categories">
+
+        {% for c in categories %}
+
+        <a class="category" href="/?category={{ c.slug }}">
+
+            <div class="cat-icon">
+                {% if c.slug == "telefonlar" %}
+                    📱
+                {% elif c.slug == "noutbuklar" %}
+                    💻
+                {% elif c.slug == "audio" %}
+                    🎧
+                {% elif c.slug == "smart-soatlar" %}
+                    ⌚
+                {% elif c.slug == "kiyimlar" %}
+                    👕
+                {% elif c.slug == "poyabzallar" %}
+                    👟
+                {% elif c.slug == "uy-va-mebel" %}
+                    🛋️
+                {% elif c.slug == "gozallik" %}
+                    💄
+                {% elif c.slug == "gaming" %}
+                    🎮
+                {% else %}
+                    ⚡
+                {% endif %}
+            </div>
+
+            <b>{{ c.name }}</b>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+    <div id="products" class="section-title">
+
+        <h2>🔥 Mashhur mahsulotlar</h2>
+
+        <span>
+            {{ products|length }} ta mahsulot
+        </span>
+
+    </div>
+
+
+    <div class="grid">
+
+        {% for p in products %}
+
+        <article class="card">
+
+            <!-- PRODUCT IMAGE -->
+            <a href="{% url 'product' p.slug %}" class="pic">
+
+                {% if p.image %}
+                    <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                {% else %}
+                    <span>📦</span>
+                {% endif %}
+
+            </a>
+
+
+            <!-- PRODUCT INFO -->
+            <div class="card-body">
+
+                <div class="rating">
+                    ★ {{ p.rating }} · {{ p.category.name }}
+                </div>
+
+                <h3>
+                    {{ p.name }}
+                </h3>
+
+                <p class="desc">
+                    {{ p.description|truncatechars:72 }}
+                </p>
+
+
+                <!-- PRICE -->
+                <span class="price">
+                    {{ p.price|floatformat:0 }} so'm
+                </span>
+
+
+                <!-- OLD PRICE -->
+                {% if p.old_price %}
+                    <span class="old">
+                        <del>
+                            {{ p.old_price|floatformat:0 }}
+                        </del>
+                    </span>
+                {% endif %}
+
+
+                <!-- BUTTONS -->
+                <div class="buyrow">
+
+                    <a
+                        class="btn btn-primary"
+                        href="{% url 'product' p.slug %}"
+                    >
+                        Batafsil
+                    </a>
+
+
+                    {% if user.is_authenticated %}
+
+                        <a
+                            class="btn cart-mini"
+                            href="{% url 'add_cart' p.id %}"
+                            title="Savatga qo'shish"
+                        >
+                            🛒
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            class="btn cart-mini"
+                            href="{% url 'register' %}"
+                            title="Avval ro'yxatdan o'ting"
+                        >
+                            🛒
+                        </a>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </article>
+
+
+        {% empty %}
+
+        <div class="empty">
+            Hozircha mahsulotlar mavjud emas.
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- FEATURES -->
+    <section
+        style="
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:12px;
+            margin:34px 0 10px
+        "
+    >
+
+        <div class="feature">
+            🚚
+            <b>Tezkor yetkazib berish</b>
+            <br>
+            <small>
+                Buyurtmangizni o'z vaqtida yetkazamiz.
+            </small>
+        </div>
+
+
+        <div class="feature">
+            🔒
+            <b>Xavfsiz xarid</b>
+            <br>
+            <small>
+                Ma'lumotlaringiz himoyalangan.
+            </small>
+        </div>
+
+
+        <div class="feature">
+            ↩
+            <b>Oson qaytarish</b>
+            <br>
+            <small>
+                Qulay va tushunarli qaytarish shartlari.
+            </small>
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

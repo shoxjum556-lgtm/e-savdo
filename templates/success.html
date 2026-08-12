@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<main class="container narrow center"><div class="success">✅</div><h1>Buyurtma qabul qilindi!</h1><p>Buyurtma №{{order.id}}. Jami: <b>{{order.total|floatformat:0}} so'm</b></p><a class="btn dark" href="{% url 'orders' %}">Buyurtmalarim</a></main>{% endblock %}

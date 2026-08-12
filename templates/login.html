@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Kirish — MEGA E-SAVDO{% endblock %}
+{% block content %}
+<main class="container auth-page">
+  <div class="auth-card">
+    <div class="auth-icon">👤</div>
+    <div class="auth-heading">
+      <span>MEGA E-SAVDO</span>
+      <h1>Akkauntga kirish</h1>
+      <p>Buyurtmalar, savat va shaxsiy imkoniyatlardan foydalaning.</p>
+    </div>
+    <form method="post" class="form auth-form">
+      {% csrf_token %}
+      {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
+      {% for field in form %}
+        <div class="field-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% for error in field.errors %}<div class="field-error">{{ error }}</div>{% endfor %}
+        </div>
+      {% endfor %}
+      <button class="btn btn-primary auth-submit" type="submit">Kirish →</button>
+    </form>
+    <div class="auth-switch">Akkauntingiz yo'qmi? <a href="{% url 'register' %}">Ro'yxatdan o'tish</a></div>
+  </div>
+</main>
+{% endblock %}

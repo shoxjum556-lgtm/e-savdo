@@ -1,0 +1,1 @@
+{% extends "base.html" %}{% block content %}<main class="container"><h1>Buyurtmalarim</h1>{% for o in orders %}<div class="order"><b>№{{o.id}}</b><span>{{o.created_at|date:"d.m.Y H:i"}}</span><span>{{o.get_status_display}}</span><strong>{{o.total|floatformat:0}} so'm</strong></div>{% empty %}<div class="empty">Hozircha buyurtma yo'q.</div>{% endfor %}</main>{% endblock %}
