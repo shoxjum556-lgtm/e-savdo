@@ -8,3 +8,4 @@ path("admin/",admin.site.urls),
 path("",include("shop.urls")),
 path("api/",include("shop.api_urls")),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
